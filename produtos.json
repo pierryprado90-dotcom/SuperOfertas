@@ -1,0 +1,20 @@
+[
+  {
+    "nome": "Isca Artificial Premium",
+    "preco": "R$108,90",
+    "old": "R$129,90",
+    "imagem": "https://via.placeholder.com/300",
+    "link": "https://meli.la/2jt6War",
+    "tempo": "há 2 minutos",
+    "desconto": "-10%"
+  },
+  {
+    "nome": "Fone Bluetooth Sem Fio",
+    "preco": "R$149,90",
+    "old": "R$199,90",
+    "imagem": "https://via.placeholder.com/300",
+    "link": "https://google.com",
+    "tempo": "há 5 minutos",
+    "desconto": "-15%"
+  }
+]
