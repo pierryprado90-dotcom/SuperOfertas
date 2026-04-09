@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Achadinhos do Pierry 🔥</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f2f2f2;
+  margin: 0;
+}
+
+.header {
+  background: #2563eb;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 10px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 10px;
+  position: relative;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.discount {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #1d4ed8;
+  color: white;
+  padding: 4px 6px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.time {
+  font-size: 12px;
+  color: gray;
+}
+
+.price {
+  color: purple;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.old {
+  text-decoration: line-through;
+  color: gray;
+  font-size: 13px;
+}
+
+.btn {
+  display: block;
+  text-align: center;
+  background: green;
+  color: white;
+  padding: 8px;
+  border-radius: 6px;
+  text-decoration: none;
+  margin-top: 5px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+  <h2>🔥 Achadinhos do Pierry</h2>
+  <span>🔍</span>
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <span class="discount">-10%</span>
+    <img src="https://via.placeholder.com/300">
+    <p class="time">há 2 minutos</p>
+    <p>Isca Artificial Premium</p>
+    <span class="old">R$129,90</span><br>
+    <span class="price">R$108,90</span>
+    <a class="btn" href="#">COMPRAR</a>
+  </div>
+
+</div>
+
+</body>
+</html>
