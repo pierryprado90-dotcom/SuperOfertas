@@ -88,38 +88,26 @@ body {
   <span>🔍</span>
 </div>
 
-<div class="container">
+<div class="container" id="produtos"></div>
 
-  <div class="card">
-    <span class="discount">-10%</span>
-    <img src="https://via.placeholder.com/300">
-    <p class="time">há 2 minutos</p>
-    <p>Isca Artificial Premium</p>
-    <span class="old">R$129,90</span><br>
-    <span class="price">R$108,90</span>
-    <a class="btn" href="https://meli.la/2jt6War" target="_blank">COMPRAR</a>
-    <div class="card">
-  <span class="discount">-15%</span>
-  <img src="https://via.placeholder.com/300">
-  <p class="time">há 5 minutos</p>
-  <p>Fone Bluetooth Sem Fio</p>
-  <span class="old">R$199,90</span><br>
-  <span class="price">R$149,90</span>
-  <a class="btn" href="SEU_LINK_AQUI" target="_blank">VER OFERTA</a>
-</div>
+<script>
+fetch('produtos.json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('produtos');
 
-<div class="card">
-  <span class="discount">-20%</span>
-  <img src="https://via.placeholder.com/300">
-  <p class="time">há 10 minutos</p>
-  <p>Lâmpada LED Inteligente</p>
-  <span class="old">R$89,90</span><br>
-  <span class="price">R$59,90</span>
-  <a class="btn" href="SEU_LINK_AQUI" target="_blank">APROVEITAR</a>
-</div>
-  </div>
-
-</div>
-
-</body>
-</html>
+    data.forEach(prod => {
+      container.innerHTML += `
+        <div class="card">
+          <span class="discount">${prod.desconto}</span>
+          <img src="${prod.imagem}">
+          <p class="time">${prod.tempo}</p>
+          <p>${prod.nome}</p>
+          <span class="old">${prod.old}</span><br>
+          <span class="price">${prod.preco}</span>
+          <a class="btn" href="${prod.link}" target="_blank">VER OFERTA</a>
+        </div>
+      `;
+    });
+  });
+</script>
