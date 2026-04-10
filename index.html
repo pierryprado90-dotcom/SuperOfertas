@@ -130,6 +130,9 @@ body {
 fetch('./produtos.json')
   .then(res => res.json())
   .then(data => {
+    console.log(data) // debug
+  .then(res => res.json())
+  .then(data => {
     const container = document.getElementById('produtos');
 
     data.forEach(prod => {
