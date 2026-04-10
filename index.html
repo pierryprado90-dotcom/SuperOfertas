@@ -127,7 +127,7 @@ body {
 </div>
 
 <script>
-fetch('produtos.json')
+fetch('./produtos.json')
   .then(res => res.json())
   .then(data => {
     const container = document.getElementById('produtos');
