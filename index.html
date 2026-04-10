@@ -3,169 +3,86 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🔥 Achadinhos do Pierry</title>
+
+<title>Achadinhos do Pierry</title>
 
 <style>
 body {
-  font-family: Arial;
-  background: #f5f5f5;
   margin: 0;
+  font-family: Arial;
+  background: #f1f2f4;
 }
 
 /* HEADER */
 .header {
-  background: linear-gradient(90deg, #ff5722, #ff3d00);
+  background: #2d5bbf;
   color: white;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 15px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  background: black;
+  border-radius: 8px;
+}
+
+.menu {
+  display: flex;
+  gap: 15px;
+  font-size: 14px;
+}
+
+/* SECTIONS */
+.section {
   padding: 15px;
-  text-align: center;
-  font-size: 20px;
+}
+
+.title {
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 /* GRID */
 .container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  padding: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
 }
 
 /* CARD */
 .card {
   background: white;
   border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-  position: relative;
-}
-
-/* IMAGE */
-.card img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-}
-
-/* DISCOUNT */
-.discount {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: #ff3d00;
-  color: white;
-  font-size: 11px;
-  padding: 3px 6px;
-  border-radius: 5px;
-}
-
-/* CONTENT */
-.card-content {
-  padding: 8px;
-}
-
-.time {
-  font-size: 11px;
-  color: gray;
-}
-
-.card p {
-  font-size: 13px;
-  margin: 4px 0;
-  height: 32px;
-  overflow: hidden;
-}
-
-/* PRICE */
-.old {
-  text-decoration: line-through;
-  font-size: 11px;
-  color: gray;
-}
-
-.price {
-  color: #ff3d00;
-  font-weight: bold;
-  font-size: 15px;
-}
-
-/* BUTTON */
-.btn {
-  display: block;
-  text-align: center;
-  background: #ff3d00;
-  color: white;
-  padding: 8px;
-  text-decoration: none;
-  font-size: 13px;
-  margin: 8px;
-  border-radius: 6px;
-  font-weight: bold;
-}
-
-/* HOVER (efeito profissional) */
-.card:hover {
-  transform: scale(1.02);
-  transition: 0.2s;
-}
-</style>
-
-/* HEADER */
-.header {
-  background: #ff5722;
-  color: white;
-  padding: 15px;
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-/* GRID */
-.container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
   padding: 10px;
-}
-
-/* CARD */
-.card {
-  background: white;
-  border-radius: 10px;
-  padding: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   position: relative;
 }
 
-/* IMG */
 .card img {
   width: 100%;
-  border-radius: 8px;
+  height: 150px;
+  object-fit: contain;
 }
 
-/* DISCOUNT */
 .discount {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  background: #ff5722;
+  top: 10px;
+  right: 10px;
+  background: #2d5bbf;
   color: white;
+  padding: 4px 6px;
   font-size: 12px;
-  padding: 3px 6px;
   border-radius: 5px;
 }
 
-/* TEXT */
 .time {
   font-size: 11px;
   color: gray;
 }
 
-.card p {
-  font-size: 13px;
-  margin: 5px 0;
-}
-
-/* PRICE */
 .old {
   text-decoration: line-through;
   font-size: 12px;
@@ -173,7 +90,7 @@ body {
 }
 
 .price {
-  color: #ff5722;
+  color: purple;
   font-weight: bold;
   font-size: 16px;
 }
@@ -181,13 +98,12 @@ body {
 /* BUTTON */
 .btn {
   display: block;
-  text-align: center;
   background: #ff5722;
   color: white;
-  padding: 7px;
+  text-align: center;
+  padding: 8px;
   border-radius: 6px;
   text-decoration: none;
-  font-size: 13px;
   margin-top: 5px;
 }
 </style>
@@ -197,10 +113,18 @@ body {
 <body>
 
 <div class="header">
-🔥 Achadinhos do Pierry
+  <div class="logo"></div>
+  <div class="menu">
+    <span>CUPOM</span>
+    <span>PROMOÇÕES</span>
+    <span>CATEGORIAS</span>
+  </div>
 </div>
 
-<div class="container" id="produtos"></div>
+<div class="section">
+  <div class="title">Promoções do dia</div>
+  <div class="container" id="produtos"></div>
+</div>
 
 <script>
 fetch('produtos.json')
@@ -214,13 +138,10 @@ fetch('produtos.json')
           <span class="discount">${prod.desconto}</span>
           <img src="${prod.imagem}">
           <p class="time">${prod.tempo}</p>
-          <div class="card-content">
-            <p class="time">${prod.tempo}</p>
-            <p>${prod.nome}</p>
-            <span class="old">${prod.old}</span><br>
-            <span class="price">${prod.preco}</span>
-        </div>
-        <a class="btn" href="${prod.link}" target="_blank">🛒 COMPRAR</a>
+          <p>${prod.nome}</p>
+          <span class="old">${prod.old}</span><br>
+          <span class="price">${prod.preco}</span>
+          <a class="btn" href="${prod.link}" target="_blank">COMPRAR</a>
         </div>
       `;
     });
