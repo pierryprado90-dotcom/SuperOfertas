@@ -3,78 +3,94 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Achadinhos do Pierry 🔥</title>
+<title>🔥 Achadinhos do Pierry</title>
 
 <style>
 body {
   font-family: Arial;
-  background: #f2f2f2;
+  background: #f5f5f5;
   margin: 0;
 }
 
+/* HEADER */
 .header {
-  background: #2563eb;
+  background: #ff5722;
   color: white;
   padding: 15px;
-  display: flex;
-  justify-content: space-between;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
 }
 
+/* GRID */
 .container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 10px;
   padding: 10px;
 }
 
+/* CARD */
 .card {
   background: white;
-  border-radius: 12px;
-  padding: 10px;
+  border-radius: 10px;
+  padding: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   position: relative;
 }
 
+/* IMG */
 .card img {
   width: 100%;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
+/* DISCOUNT */
 .discount {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #1d4ed8;
+  top: 8px;
+  right: 8px;
+  background: #ff5722;
   color: white;
-  padding: 4px 6px;
-  border-radius: 5px;
   font-size: 12px;
+  padding: 3px 6px;
+  border-radius: 5px;
 }
 
+/* TEXT */
 .time {
+  font-size: 11px;
+  color: gray;
+}
+
+.card p {
+  font-size: 13px;
+  margin: 5px 0;
+}
+
+/* PRICE */
+.old {
+  text-decoration: line-through;
   font-size: 12px;
   color: gray;
 }
 
 .price {
-  color: purple;
+  color: #ff5722;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
 }
 
-.old {
-  text-decoration: line-through;
-  color: gray;
-  font-size: 13px;
-}
-
+/* BUTTON */
 .btn {
   display: block;
   text-align: center;
-  background: green;
+  background: #ff5722;
   color: white;
-  padding: 8px;
+  padding: 7px;
   border-radius: 6px;
   text-decoration: none;
+  font-size: 13px;
   margin-top: 5px;
 }
 </style>
@@ -84,8 +100,7 @@ body {
 <body>
 
 <div class="header">
-  <h2>🔥 Achadinhos do Pierry</h2>
-  <span>🔍</span>
+🔥 Achadinhos do Pierry
 </div>
 
 <div class="container" id="produtos"></div>
@@ -105,9 +120,12 @@ fetch('produtos.json')
           <p>${prod.nome}</p>
           <span class="old">${prod.old}</span><br>
           <span class="price">${prod.preco}</span>
-          <a class="btn" href="${prod.link}" target="_blank">VER OFERTA</a>
+          <a class="btn" href="${prod.link}" target="_blank">🛒 COMPRAR</a>
         </div>
       `;
     });
   });
 </script>
+
+</body>
+</html>
