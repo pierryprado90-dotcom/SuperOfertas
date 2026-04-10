@@ -14,6 +14,103 @@ body {
 
 /* HEADER */
 .header {
+  background: linear-gradient(90deg, #ff5722, #ff3d00);
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* GRID */
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 10px;
+}
+
+/* CARD */
+.card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+/* IMAGE */
+.card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+/* DISCOUNT */
+.discount {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #ff3d00;
+  color: white;
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 5px;
+}
+
+/* CONTENT */
+.card-content {
+  padding: 8px;
+}
+
+.time {
+  font-size: 11px;
+  color: gray;
+}
+
+.card p {
+  font-size: 13px;
+  margin: 4px 0;
+  height: 32px;
+  overflow: hidden;
+}
+
+/* PRICE */
+.old {
+  text-decoration: line-through;
+  font-size: 11px;
+  color: gray;
+}
+
+.price {
+  color: #ff3d00;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+/* BUTTON */
+.btn {
+  display: block;
+  text-align: center;
+  background: #ff3d00;
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  font-size: 13px;
+  margin: 8px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+/* HOVER (efeito profissional) */
+.card:hover {
+  transform: scale(1.02);
+  transition: 0.2s;
+}
+</style>
+
+/* HEADER */
+.header {
   background: #ff5722;
   color: white;
   padding: 15px;
@@ -117,10 +214,13 @@ fetch('produtos.json')
           <span class="discount">${prod.desconto}</span>
           <img src="${prod.imagem}">
           <p class="time">${prod.tempo}</p>
-          <p>${prod.nome}</p>
-          <span class="old">${prod.old}</span><br>
-          <span class="price">${prod.preco}</span>
-          <a class="btn" href="${prod.link}" target="_blank">🛒 COMPRAR</a>
+          <div class="card-content">
+            <p class="time">${prod.tempo}</p>
+            <p>${prod.nome}</p>
+            <span class="old">${prod.old}</span><br>
+            <span class="price">${prod.preco}</span>
+        </div>
+        <a class="btn" href="${prod.link}" target="_blank">🛒 COMPRAR</a>
         </div>
       `;
     });
