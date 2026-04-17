@@ -251,10 +251,21 @@ function mostrarProdutos(lista) {
 }
 
 /* BUSCA */
-document.getElementById("search").addEventListener("input", e => {
-    let v = e.target.value.toLowerCase();
-    let f = produtosGlobal.filter(p => p.nome.toLowerCase().includes(v));
-    mostrarProdutos(f);
+document.getElementById("categoria").addEventListener("change", e => {
+
+    const categoria = e.target.value.toLowerCase();
+
+    if (categoria === "all") {
+        mostrarProdutos(produtosGlobal);
+        return;
+    }
+
+    const filtrados = produtosGlobal.filter(prod =>
+        prod.categoria && prod.categoria.toLowerCase().includes(categoria)
+    );
+
+    mostrarProdutos(filtrados);
+
 });
 
 /* CATEGORIA */
