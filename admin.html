@@ -2,139 +2,178 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Painel Admin - Super Ofertas</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Produtos</title>
 
 <style>
 body {
-    font-family: Arial;
+    margin: 0;
+    font-family: Arial, sans-serif;
     background: #0f0f0f;
-    color: white;
-    padding: 20px;
+    color: #fff;
+    padding: 24px;
 }
 
 h1 {
-    color: #ff5722;
+    color: #ff5a1f;
+    margin-bottom: 24px;
+    font-size: 28px;
 }
 
-input {
+.form-box {
+    max-width: 900px;
+}
+
+input, select {
     width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 14px;
     border: none;
+    border-radius: 12px;
     font-size: 16px;
+    box-sizing: border-box;
 }
 
 button {
     width: 100%;
-    padding: 14px;
-    margin-top: 10px;
+    padding: 18px;
+    margin-bottom: 12px;
     border: none;
-    border-radius: 10px;
-    background: #ff5722;
+    border-radius: 14px;
+    background: #ff5a1f;
     color: white;
     font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 button:hover {
-    background: #e64a19;
+    background: #e84d16;
+    transform: translateY(-1px);
 }
 
-#output {
-    margin-top: 20px;
-    background: #1a1a1a;
-    padding: 15px;
-    border-radius: 10px;
+#saida {
+    background: #1b1b1b;
+    padding: 16px;
+    border-radius: 12px;
     white-space: pre-wrap;
-    font-size: 14px;
+    word-break: break-word;
+    margin-top: 14px;
+    min-height: 80px;
+}
+
+.linha {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+@media (max-width: 700px) {
+    .linha {
+        grid-template-columns: 1fr;
+    }
 }
 </style>
 </head>
-
 <body>
 
-<select id="categoria">
-    <option value="gamer">Gamer</option>
-    <option value="casa">Casa</option>
-    <option value="eletronicos">Eletrônicos</option>
-    <option value="saude">Saúde</option>
-    <option value="Perfumes">Perfumes</option>
-</select>    
+<div class="form-box">
+    <h1>🚀 Gerador de Produtos</h1>
 
-<h1>🚀 Gerador de Produtos</h1>
+    <input id="nome" placeholder="Nome do produto">
+    <div class="linha">
+        <input id="preco" placeholder="Preço atual (ex: R$79,90)">
+        <input id="old" placeholder="Preço antigo (ex: R$119,90)">
+    </div>
 
-<input id="nome" placeholder="Nome do produto">
-<input id="preco" placeholder="Preço atual (ex: R$79,90)">
-<input id="old" placeholder="Preço antigo (ex: R$119,90)">
-<input id="imagem" placeholder="Link da imagem">
-<input id="link" placeholder="Link afiliado">
-<input id="desconto" placeholder="Desconto (ex: 30%)">
+    <input id="imagem" placeholder="Link da imagem">
+    <input id="link" placeholder="Link afiliado">
 
-<button onclick="gerarJSON()">🔥 Gerar Produto</button>
-<button onclick="copiarJSON()">📋 Copiar JSON</button>
-<button onclick="salvarProduto()">💾 Adicionar ao Site</button>
+    <div class="linha">
+        <input id="desconto" placeholder="Desconto (ex: 30%)">
+        <select id="categoria">
+            <option value="casa">Casa</option>
+            <option value="gamer">Gamer</option>
+            <option value="eletronicos">Eletrônicos</option>
+            <option value="saude">Saúde</option>
+            <option value="perfumes">Perfumes</option>
+        </select>
+    </div>
 
-<div id="output"></div>
+    <button type="button" onclick="gerarProduto()">🔥 Gerar Produto</button>
+    <button type="button" onclick="copiarJSON()">📋 Copiar JSON</button>
+    <button type="button" onclick="adicionarAoSite()">💾 Adicionar ao Site</button>
+
+    <div id="saida"></div>
+</div>
 
 <script>
-let produtoGerado = "";
+let produtoAtual = null;
 
-function gerarJSON() {
-    const produto = {
-        nome: document.getElementById("nome").value,
-        preco: document.getElementById("preco").value,
-        old: document.getElementById("old").value,
-        imagem: document.getElementById("imagem").value,
-        link: document.getElementById("link").value,
+function gerarProduto() {
+    const nome = document.getElementById("nome").value.trim();
+    const preco = document.getElementById("preco").value.trim();
+    const old = document.getElementById("old").value.trim();
+    const imagem = document.getElementById("imagem").value.trim();
+    const link = document.getElementById("link").value.trim();
+    const descontoBruto = document.getElementById("desconto").value.trim();
+    const categoria = document.getElementById("categoria").value.trim();
+
+    if (!nome || !preco || !imagem || !link) {
+        alert("Preencha pelo menos nome, preço, imagem e link.");
+        return;
+    }
+
+    let desconto = descontoBruto;
+    if (desconto && !desconto.startsWith("-")) desconto = "-" + desconto;
+    if (desconto && !desconto.endsWith("%")) desconto = desconto + "%";
+
+    produtoAtual = {
+        nome,
+        preco,
+        old,
+        imagem,
+        link,
+        categoria,
         tempo: "agora",
-        desconto: document.getElementById("desconto").value
-        categoria: document.getElementById("categoria").value,
+        desconto
     };
 
-    produtoGerado = `,
-{
-  "nome": "${produto.nome}",
-  "preco": "${produto.preco}",
-  "old": "${produto.old}",
-  "imagem": "${produto.imagem}",
-  "link": "${produto.link}",
-  "tempo": "agora",
-  "desconto": "-${produto.desconto}"
-}`;
-
-    document.getElementById("output").innerText = produtoGerado;
+    document.getElementById("saida").textContent =
+`,\n${JSON.stringify(produtoAtual, null, 2)}`;
 }
 
 function copiarJSON() {
-    navigator.clipboard.writeText(produtoGerado);
-    alert("📋 Copiado!");
+    if (!produtoAtual) {
+        alert("Gere o produto primeiro.");
+        return;
+    }
+
+    navigator.clipboard.writeText(
+`,\n${JSON.stringify(produtoAtual, null, 2)}`
+    ).then(() => {
+        alert("JSON copiado.");
+    }).catch(() => {
+        alert("Não consegui copiar. Tente novamente.");
+    });
 }
 
-function salvarProduto() {
-    const produto = {
-        nome: document.getElementById("nome").value,
-        preco: document.getElementById("preco").value,
-        old: document.getElementById("old").value,
-        imagem: document.getElementById("imagem").value,
-        link: document.getElementById("link").value,
-        tempo: "agora",
-        desconto: "-" + document.getElementById("desconto").value
-    };
+function adicionarAoSite() {
+    if (!produtoAtual) {
+        gerarProduto();
+        if (!produtoAtual) return;
+    }
 
-    let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
-
-    produtos.unshift(produto);
-
-    localStorage.setItem("produtos", JSON.stringify(produtos));
-
-    alert("🔥 Produto adicionado ao site!");
-
-    limparCampos();
-}
-
-function limparCampos() {
-    document.querySelectorAll("input").forEach(input => input.value = "");
+    try {
+        const existentes = JSON.parse(localStorage.getItem("produtos")) || [];
+        existentes.unshift(produtoAtual);
+        localStorage.setItem("produtos", JSON.stringify(existentes));
+        alert("Produto adicionado ao site com sucesso.");
+    } catch (err) {
+        console.error(err);
+        alert("Erro ao salvar no navegador.");
+    }
 }
 </script>
 
