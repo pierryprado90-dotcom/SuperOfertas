@@ -29,14 +29,73 @@ body {
     padding: 10px;
     border-radius: 6px;
     border: none;
-    width: 220px;
-    font-size: 14px;
+    width: 200px;
 }
 
-/* TITULO */
-h2 {
-    padding: 15px;
-    font-size: 18px;
+#categoria {
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+}
+
+/* TEXTO ANIMADO */
+.titulo-animado {
+    color: white;
+    font-weight: bold;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+/* DESTAQUE */
+.destaque {
+    margin: 15px;
+    background: white;
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.destaque:hover {
+    transform: scale(1.01);
+}
+
+.destaque img {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+}
+
+.destaque-info {
+    flex: 1;
+}
+
+.destaque-preco {
+    color: #ff5722;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.destaque-old {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.destaque-btn {
+    background: #ff5722;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
 }
 
 /* GRID */
@@ -52,33 +111,7 @@ h2 {
     background: white;
     border-radius: 10px;
     padding: 8px;
-    position: relative;
     transition: 0.2s;
-    cursor: pointer;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-
-/* IMAGEM */
-/* GRID */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 12px;
-    padding: 10px;
-}
-
-/* CARD */
-.card {
-    background: white;
-    border-radius: 10px;
-    padding: 8px;
-    position: relative;
-    transition: 0.2s;
-    cursor: pointer;
     overflow: hidden;
 }
 
@@ -87,24 +120,19 @@ h2 {
     box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
 
-/* CONTAINER DA IMAGEM */
+/* IMAGEM */
 .img-box {
-    width: 100%;
-    aspect-ratio: 1/1;   /* quadrado perfeito */
+    aspect-ratio: 1/1;
     overflow: hidden;
-    border-radius: 8px;
-    background: #fff;
 }
 
-/* IMAGEM */
 .img-box img {
     width: 100%;
     height: 100%;
-    object-fit: contain;  /* estilo Shopee */
+    object-fit: contain;
     transition: 0.3s;
 }
 
-/* ZOOM IGUAL SHOPEE */
 .card:hover img {
     transform: scale(1.08);
 }
@@ -112,30 +140,19 @@ h2 {
 /* BADGE */
 .badge {
     position: absolute;
-    top: 8px;
-    right: 8px;
     background: #ff5722;
     color: white;
-    padding: 4px 6px;
-    border-radius: 5px;
+    padding: 4px;
     font-size: 11px;
-    font-weight: bold;
 }
 
-/* TEXTO */
-.tempo {
-    font-size: 11px;
-    color: gray;
-    margin: 5px 0;
-}
-
+/* TEXTOS */
 .nome {
     font-size: 13px;
     height: 34px;
     overflow: hidden;
 }
 
-/* PREÇO */
 .old {
     text-decoration: line-through;
     color: gray;
@@ -145,7 +162,6 @@ h2 {
 .preco {
     color: #ff5722;
     font-weight: bold;
-    font-size: 16px;
 }
 
 /* BOTÃO */
@@ -158,69 +174,6 @@ h2 {
     border-radius: 6px;
     text-decoration: none;
     margin-top: 6px;
-    font-size: 13px;
-    transition: 0.2s;
-}
-
-.botao:hover {
-    background: #e64a19;
-}
-
-/* DESCONTO */
-.badge {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: #ff5722;
-    color: white;
-    padding: 4px 6px;
-    border-radius: 5px;
-    font-size: 11px;
-    font-weight: bold;
-}
-
-/* TEXTO */
-.tempo {
-    font-size: 11px;
-    color: gray;
-    margin: 5px 0;
-}
-
-.nome {
-    font-size: 13px;
-    height: 32px;
-    overflow: hidden;
-}
-
-/* PREÇO */
-.old {
-    text-decoration: line-through;
-    color: gray;
-    font-size: 12px;
-}
-
-.preco {
-    color: #ff5722;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-/* BOTÃO */
-.botao {
-    display: block;
-    background: #ff5722;
-    color: white;
-    text-align: center;
-    padding: 8px;
-    border-radius: 6px;
-    text-decoration: none;
-    margin-top: 6px;
-    font-size: 13px;
-    transition: 0.2s;
-}
-
-.botao:hover {
-    background: #e64a19;
 }
 </style>
 </head>
@@ -229,86 +182,92 @@ h2 {
 
 <div class="topo">
     <img src="banner.png" class="logo">
-    <input type="text" id="search" placeholder="🔎 Buscar produtos...">
+    <div class="titulo-animado">🔥 Achadinhos Super Ofertas</div>
+    <input type="text" id="search" placeholder="Buscar...">
+    <select id="categoria">
+        <option value="all">Categorias</option>
+        <option value="gamer">Gamer</option>
+        <option value="casa">Casa</option>
+        <option value="eletronicos">Eletrônicos</option>
+    </select>
 </div>
 
-<h2>🔥 Promoções do dia</h2>
+<!-- DESTAQUE -->
+<div id="destaque"></div>
 
+<h2>🔥 Promoções do dia</h2>
 <div id="produtos" class="grid"></div>
 
 <script>
 
 let produtosGlobal = [];
 
-// =========================
-// CARREGAR PRODUTOS
-// =========================
-
 fetch('./produtos.json')
-  .then(res => res.json())
-  .then(data => {
+.then(res => res.json())
+.then(data => {
 
-      let produtosLocal = JSON.parse(localStorage.getItem("produtos")) || [];
+    let local = JSON.parse(localStorage.getItem("produtos")) || [];
+    let todos = [...local, ...data];
 
-      const todosProdutos = [...produtosLocal, ...data];
+    produtosGlobal = todos;
 
-      produtosGlobal = todosProdutos;
-      mostrarProdutos(todosProdutos);
+    mostrarDestaque(todos[0]); // primeiro produto em destaque
+    mostrarProdutos(todos);
+});
 
-  });
-
-
-// =========================
-// MOSTRAR PRODUTOS
-// =========================
+function mostrarDestaque(prod) {
+    document.getElementById("destaque").innerHTML = `
+        <div class="destaque">
+            <img src="${prod.imagem}">
+            <div class="destaque-info">
+                <h3>${prod.nome}</h3>
+                <div class="destaque-old">${prod.old}</div>
+                <div class="destaque-preco">${prod.preco}</div>
+                <a href="${prod.link}" target="_blank" class="destaque-btn">
+                    🔥 Comprar Agora
+                </a>
+            </div>
+        </div>
+    `;
+}
 
 function mostrarProdutos(lista) {
-
     const container = document.getElementById("produtos");
     container.innerHTML = "";
 
     lista.forEach(prod => {
-
         container.innerHTML += `
         <div class="card">
-
-            <div class="badge">${prod.desconto}</div>
-
             <div class="img-box">
-    <img src="${prod.imagem}" loading="lazy"/>
-</div>
-
-            <div class="tempo">${prod.tempo}</div>
-
+                <img src="${prod.imagem}">
+            </div>
             <div class="nome">${prod.nome}</div>
-
             <div class="old">${prod.old}</div>
             <div class="preco">${prod.preco}</div>
-
-            <a href="${prod.link}" target="_blank" class="botao">
-                COMPRAR
-            </a>
-
+            <a href="${prod.link}" target="_blank" class="botao">COMPRAR</a>
         </div>
         `;
     });
 }
 
-
-// =========================
-// BUSCA
-// =========================
-
+/* BUSCA */
 document.getElementById("search").addEventListener("input", e => {
+    let v = e.target.value.toLowerCase();
+    let f = produtosGlobal.filter(p => p.nome.toLowerCase().includes(v));
+    mostrarProdutos(f);
+});
 
-    const valor = e.target.value.toLowerCase();
+/* CATEGORIA */
+document.getElementById("categoria").addEventListener("change", e => {
+    let c = e.target.value;
 
-    const filtrados = produtosGlobal.filter(prod =>
-        prod.nome.toLowerCase().includes(valor)
-    );
+    if (c === "all") {
+        mostrarProdutos(produtosGlobal);
+        return;
+    }
 
-    mostrarProdutos(filtrados);
-
+    let f = produtosGlobal.filter(p => p.categoria === c);
+    mostrarProdutos(f);
 });
 
 </script>
