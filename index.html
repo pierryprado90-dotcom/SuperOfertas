@@ -15,28 +15,27 @@ body {
 
 /* HEADER */
 .header {
-  background: #2d5bbf;
-  color: white;
+  background: #ff5722;
   display: flex;
   align-items: center;
   padding: 10px;
-  gap: 15px;
+  gap: 10px;
 }
 
-.logo {
-  width: 40px;
-  height: 40px;
-  background: black;
+.logo-img {
+  height: 45px;
   border-radius: 8px;
 }
 
-.menu {
-  display: flex;
-  gap: 15px;
+.search {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
   font-size: 14px;
 }
 
-/* SECTIONS */
+/* TITLE */
 .section {
   padding: 15px;
 }
@@ -44,12 +43,13 @@ body {
 .title {
   font-weight: bold;
   margin-bottom: 10px;
+  font-size: 18px;
 }
 
 /* GRID */
 .container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 15px;
 }
 
@@ -59,25 +59,32 @@ body {
   border-radius: 12px;
   padding: 10px;
   position: relative;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.02);
 }
 
 .card img {
   width: 100%;
-  height: 150px;
+  height: 160px;
   object-fit: contain;
 }
 
+/* BADGE */
 .discount {
   position: absolute;
   top: 10px;
   right: 10px;
-  background: #2d5bbf;
+  background: #ff5722;
   color: white;
   padding: 4px 6px;
   font-size: 12px;
   border-radius: 5px;
 }
 
+/* TEXT */
 .time {
   font-size: 11px;
   color: gray;
@@ -90,7 +97,7 @@ body {
 }
 
 .price {
-  color: purple;
+  color: #ee4d2d;
   font-weight: bold;
   font-size: 16px;
 }
@@ -101,10 +108,15 @@ body {
   background: #ff5722;
   color: white;
   text-align: center;
-  padding: 8px;
-  border-radius: 6px;
+  padding: 10px;
+  border-radius: 8px;
   text-decoration: none;
-  margin-top: 5px;
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background: #e64a19;
 }
 </style>
 
@@ -112,39 +124,60 @@ body {
 
 <body>
 
+<!-- HEADER -->
 <div class="header">
-  <div class="logo"></div>
-  <div class="menu">
-    <span>CUPOM</span>
-    <span>PROMOÇÕES</span>
-    <span>CATEGORIAS</span>
-  </div>
+  <img src="banner.png" class="logo-img">
+  <input type="text" id="search" placeholder="🔍 Buscar produtos...">
 </div>
 
+<!-- SECTION -->
 <div class="section">
-  <div class="title">Promoções do dia</div>
+  <div class="title">🔥 Promoções do dia</div>
   <div class="container" id="produtos"></div>
 </div>
 
+<!-- SCRIPT -->
 <script>
+let produtosGlobal = [];
+
 fetch('./produtos.json')
   .then(res => res.json())
   .then(data => {
-    const container = document.getElementById('produtos');
-
-    data.forEach(prod => {
-      container.innerHTML += `
-        <div class="card">
-          <span class="discount">${prod.desconto}</span>
-          <img src="${prod.imagem}">
-          <p class="time">${prod.tempo}</p>
-          <p>${prod.nome}</p>
-          <span class="old">${prod.old}</span><br>
-          <span class="price">${prod.preco}</span>
-          <a class="btn" href="${prod.link}" target="_blank">COMPRAR</a>
-        </div>
-      `;
-    });
+    produtosGlobal = data;
+    mostrarProdutos(data);
   })
-  .catch(err => console.error(err));
+  .catch(err => console.error("Erro ao carregar JSON:", err));
+
+function mostrarProdutos(lista) {
+  const container = document.getElementById('produtos');
+  container.innerHTML = '';
+
+  lista.forEach(prod => {
+    container.innerHTML += `
+      <div class="card">
+        <span class="discount">${prod.desconto}</span>
+        <img src="${prod.imagem}">
+        <p class="time">${prod.tempo}</p>
+        <p>${prod.nome}</p>
+        <span class="old">${prod.old}</span><br>
+        <span class="price">${prod.preco}</span>
+        <a class="btn" href="${prod.link}" target="_blank">COMPRAR</a>
+      </div>
+    `;
+  });
+}
+
+/* BUSCA */
+document.getElementById('search').addEventListener('input', e => {
+  const valor = e.target.value.toLowerCase();
+
+  const filtrados = produtosGlobal.filter(prod =>
+    prod.nome.toLowerCase().includes(valor)
+  );
+
+  mostrarProdutos(filtrados);
+});
 </script>
+
+</body>
+</html>
