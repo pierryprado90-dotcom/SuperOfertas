@@ -2,84 +2,130 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Painel Admin - Pierry</title>
+<title>Painel Admin - Super Ofertas</title>
 
 <style>
 body {
-  font-family: Arial;
-  background: #111;
-  color: white;
-  padding: 20px;
+    font-family: Arial;
+    background: #0f0f0f;
+    color: white;
+    padding: 20px;
+}
+
+h1 {
+    color: #ff5722;
 }
 
 input {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 5px;
-  border: none;
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
 }
 
 button {
-  background: #ff5722;
-  color: white;
-  padding: 10px;
-  border: none;
-  width: 100%;
-  margin-top: 10px;
-  cursor: pointer;
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #ff5722;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
 }
 
-pre {
-  background: #222;
-  padding: 10px;
-  margin-top: 15px;
-  white-space: pre-wrap;
+button:hover {
+    background: #e64a19;
+}
+
+#output {
+    margin-top: 20px;
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 10px;
+    white-space: pre-wrap;
+    font-size: 14px;
 }
 </style>
-
 </head>
 
 <body>
 
-<h2>🚀 Gerador de Produtos</h2>
+<h1>🚀 Gerador de Produtos</h1>
 
 <input id="nome" placeholder="Nome do produto">
-<input id="preco" placeholder="Preço (R$)">
-<input id="old" placeholder="Preço antigo">
+<input id="preco" placeholder="Preço atual (ex: R$79,90)">
+<input id="old" placeholder="Preço antigo (ex: R$119,90)">
 <input id="imagem" placeholder="Link da imagem">
 <input id="link" placeholder="Link afiliado">
-<input id="desconto" placeholder="Desconto ex: -30%">
+<input id="desconto" placeholder="Desconto (ex: 30%)">
 
-<button onclick="gerar()">🔥 Gerar Produto</button>
+<button onclick="gerarJSON()">🔥 Gerar Produto</button>
+<button onclick="copiarJSON()">📋 Copiar JSON</button>
+<button onclick="salvarProduto()">💾 Adicionar ao Site</button>
 
-<button onclick="copiar()">📋 Copiar JSON</button>
-
-<pre id="saida"></pre>
+<div id="output"></div>
 
 <script>
-let ultimo = "";
+let produtoGerado = "";
 
-function gerar() {
-  const produto = {
-    nome: document.getElementById('nome').value,
-    preco: document.getElementById('preco').value,
-    old: document.getElementById('old').value,
-    imagem: document.getElementById('imagem').value,
-    link: document.getElementById('link').value,
-    tempo: "agora",
-    desconto: document.getElementById('desconto').value
-  };
+function gerarJSON() {
+    const produto = {
+        nome: document.getElementById("nome").value,
+        preco: document.getElementById("preco").value,
+        old: document.getElementById("old").value,
+        imagem: document.getElementById("imagem").value,
+        link: document.getElementById("link").value,
+        tempo: "agora",
+        desconto: document.getElementById("desconto").value
+    };
 
-  ultimo = `,
-${JSON.stringify(produto, null, 2)}`;
+    produtoGerado = `,
+{
+  "nome": "${produto.nome}",
+  "preco": "${produto.preco}",
+  "old": "${produto.old}",
+  "imagem": "${produto.imagem}",
+  "link": "${produto.link}",
+  "tempo": "agora",
+  "desconto": "-${produto.desconto}"
+}`;
 
-  document.getElementById('saida').innerText = ultimo;
+    document.getElementById("output").innerText = produtoGerado;
 }
 
-function copiar() {
-  navigator.clipboard.writeText(ultimo);
-  alert("Copiado!");
+function copiarJSON() {
+    navigator.clipboard.writeText(produtoGerado);
+    alert("📋 Copiado!");
+}
+
+function salvarProduto() {
+    const produto = {
+        nome: document.getElementById("nome").value,
+        preco: document.getElementById("preco").value,
+        old: document.getElementById("old").value,
+        imagem: document.getElementById("imagem").value,
+        link: document.getElementById("link").value,
+        tempo: "agora",
+        desconto: "-" + document.getElementById("desconto").value
+    };
+
+    let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+
+    produtos.unshift(produto);
+
+    localStorage.setItem("produtos", JSON.stringify(produtos));
+
+    alert("🔥 Produto adicionado ao site!");
+
+    limparCampos();
+}
+
+function limparCampos() {
+    document.querySelectorAll("input").forEach(input => input.value = "");
 }
 </script>
 
