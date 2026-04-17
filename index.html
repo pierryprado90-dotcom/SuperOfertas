@@ -250,6 +250,17 @@ fetch('./produtos.json')
 })
 .catch(err => console.error("Erro:", err));
 
+function removerProduto(index) {
+
+    let local = JSON.parse(localStorage.getItem("produtos")) || [];
+
+    local.splice(index, 1);
+
+    localStorage.setItem("produtos", JSON.stringify(local));
+
+    location.reload();
+}    
+
 function mostrarDestaque(prod) {
     if (!prod) return;
 
