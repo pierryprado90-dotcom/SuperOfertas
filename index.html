@@ -185,12 +185,8 @@ body {
     <div class="titulo-animado">🔥 Achadinhos Super Ofertas</div>
     <input type="text" id="search" placeholder="Buscar...">
     <select id="categoria">
-        <option value="all">Categorias</option>
-        <option value="gamer">Gamer</option>
-        <option value="casa">Casa</option>
-        <option value="saude">Saúde</option>
-        <option value="eletronicos">Eletrônicos</option>
-    </select>
+  <option value="all">Categorias</option>
+</select>
 </div>
 
 <!-- DESTAQUE -->
@@ -200,6 +196,27 @@ body {
 <div id="produtos" class="grid"></div>
 
 <script>
+
+function gerarCategorias(lista) {
+
+    const select = document.getElementById("categoria");
+
+    // limpa e mantém o padrão
+    select.innerHTML = `<option value="all">Categorias</option>`;
+
+    const categorias = [...new Set(
+        lista
+        .map(p => p.categoria?.toLowerCase())
+        .filter(Boolean)
+    )];
+
+    categorias.forEach(cat => {
+        const option = document.createElement("option");
+        option.value = cat;
+        option.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+        select.appendChild(option);
+    });
+}    
 
 let produtosGlobal = [];
 
@@ -213,7 +230,11 @@ fetch('./produtos.json')
     produtosGlobal = todos;
 
     mostrarDestaque(todos[0]); // primeiro produto em destaque
-    mostrarProdutos(todos);
+    produtosGlobal = todosProdutos;
+
+gerarCategorias(todosProdutos); // 👈 ESSENCIAL
+
+mostrarProdutos(todosProdutos);
 });
 
 function mostrarDestaque(prod) {
