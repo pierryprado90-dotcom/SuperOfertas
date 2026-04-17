@@ -54,6 +54,13 @@ button:hover {
 
 <body>
 
+<select id="categoria">
+    <option value="gamer">Gamer</option>
+    <option value="casa">Casa</option>
+    <option value="eletronicos">Eletrônicos</option>
+    <option value="saude">Saúde</option>
+</select>    
+
 <h1>🚀 Gerador de Produtos</h1>
 
 <input id="nome" placeholder="Nome do produto">
@@ -81,6 +88,7 @@ function gerarJSON() {
         link: document.getElementById("link").value,
         tempo: "agora",
         desconto: document.getElementById("desconto").value
+        categoria: document.getElementById("categoria").value,
     };
 
     produtoGerado = `,
