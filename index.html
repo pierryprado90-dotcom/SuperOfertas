@@ -9,6 +9,21 @@ body {
     font-family: Arial;
     margin: 0;
     background: #f5f5f5;
+    .delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: red;
+    color: white;
+    font-size: 12px;
+    padding: 4px 6px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.card {
+    position: relative;
 }
 
 /* TOPO */
@@ -257,16 +272,26 @@ function mostrarProdutos(lista) {
     const container = document.getElementById("produtos");
     container.innerHTML = "";
 
-    lista.forEach(prod => {
+    lista.forEach((prod, index) => {
+
+        const isLocal = prod._local === true;
+
         container.innerHTML += `
         <div class="card">
+            
+            ${isLocal ? `<div class="delete-btn" onclick="removerProduto(${index})">❌</div>` : ""}
+
             <div class="img-box">
                 <img src="${prod.imagem}">
             </div>
+
             <div class="nome">${prod.nome}</div>
             <div class="old">${prod.old || ""}</div>
             <div class="preco">${prod.preco}</div>
-            <a href="${prod.link}" target="_blank" class="botao">COMPRAR</a>
+
+            <a href="${prod.link}" target="_blank" class="botao">
+                🔥 PEGAR OFERTA
+            </a>
         </div>
         `;
     });
