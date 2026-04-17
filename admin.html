@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Painel Admin - Pierry</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #111;
+  color: white;
+  padding: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  border: none;
+}
+
+button {
+  background: #ff5722;
+  color: white;
+  padding: 10px;
+  border: none;
+  width: 100%;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+pre {
+  background: #222;
+  padding: 10px;
+  margin-top: 15px;
+  white-space: pre-wrap;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>🚀 Gerador de Produtos</h2>
+
+<input id="nome" placeholder="Nome do produto">
+<input id="preco" placeholder="Preço (R$)">
+<input id="old" placeholder="Preço antigo">
+<input id="imagem" placeholder="Link da imagem">
+<input id="link" placeholder="Link afiliado">
+<input id="desconto" placeholder="Desconto ex: -30%">
+
+<button onclick="gerar()">🔥 Gerar Produto</button>
+
+<button onclick="copiar()">📋 Copiar JSON</button>
+
+<pre id="saida"></pre>
+
+<script>
+let ultimo = "";
+
+function gerar() {
+  const produto = {
+    nome: document.getElementById('nome').value,
+    preco: document.getElementById('preco').value,
+    old: document.getElementById('old').value,
+    imagem: document.getElementById('imagem').value,
+    link: document.getElementById('link').value,
+    tempo: "agora",
+    desconto: document.getElementById('desconto').value
+  };
+
+  ultimo = `,
+${JSON.stringify(produto, null, 2)}`;
+
+  document.getElementById('saida').innerText = ultimo;
+}
+
+function copiar() {
+  navigator.clipboard.writeText(ultimo);
+  alert("Copiado!");
+}
+</script>
+
+</body>
+</html>
