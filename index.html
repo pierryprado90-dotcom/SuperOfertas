@@ -140,13 +140,24 @@ body {
 <script>
 let produtosGlobal = [];
 
-fetch('./produtos.json')
-  .then(res => res.json())
-  .then(data => {
-    produtosGlobal = data;
-    mostrarProdutos(data);
-  })
-  .catch(err => console.error("Erro ao carregar JSON:", err));
+let produtosLocal = JSON.parse(localStorage.getItem("produtos"));
+
+if (produtosLocal && produtosLocal.length > 0) {
+
+    produtosGlobal = produtosLocal;
+    mostrarProdutos(produtosLocal);
+
+} else {
+
+    fetch('./produtos.json')
+        .then(res => res.json())
+        .then(data => {
+            produtosGlobal = data;
+            mostrarProdutos(data);
+        })
+        .catch(err => console.error("Erro ao carregar JSON:", err));
+
+}
 
 function mostrarProdutos(lista) {
   const container = document.getElementById('produtos');
