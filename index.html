@@ -198,16 +198,12 @@ body {
 <script>
 
 function gerarCategorias(lista) {
-
     const select = document.getElementById("categoria");
 
-    // limpa e mantém o padrão
     select.innerHTML = `<option value="all">Categorias</option>`;
 
     const categorias = [...new Set(
-        lista
-        .map(p => p.categoria?.toLowerCase())
-        .filter(Boolean)
+        lista.map(p => p.categoria?.toLowerCase()).filter(Boolean)
     )];
 
     categorias.forEach(cat => {
@@ -216,7 +212,7 @@ function gerarCategorias(lista) {
         option.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
         select.appendChild(option);
     });
-}    
+}
 
 let produtosGlobal = [];
 
@@ -225,25 +221,29 @@ fetch('./produtos.json')
 .then(data => {
 
     let local = JSON.parse(localStorage.getItem("produtos")) || [];
+
     let todos = [...local, ...data];
 
     produtosGlobal = todos;
 
-    mostrarDestaque(todos[0]); // primeiro produto em destaque
-    produtosGlobal = todosProdutos;
+    gerarCategorias(todos); // ✅ CORRETO
 
-gerarCategorias(todosProdutos); // 👈 ESSENCIAL
+    mostrarDestaque(todos[0]);
 
-mostrarProdutos(todosProdutos);
-});
+    mostrarProdutos(todos);
+
+})
+.catch(err => console.error("Erro:", err));
 
 function mostrarDestaque(prod) {
+    if (!prod) return;
+
     document.getElementById("destaque").innerHTML = `
         <div class="destaque">
             <img src="${prod.imagem}">
             <div class="destaque-info">
                 <h3>${prod.nome}</h3>
-                <div class="destaque-old">${prod.old}</div>
+                <div class="destaque-old">${prod.old || ""}</div>
                 <div class="destaque-preco">${prod.preco}</div>
                 <a href="${prod.link}" target="_blank" class="destaque-btn">
                     🔥 Comprar Agora
@@ -264,7 +264,7 @@ function mostrarProdutos(lista) {
                 <img src="${prod.imagem}">
             </div>
             <div class="nome">${prod.nome}</div>
-            <div class="old">${prod.old}</div>
+            <div class="old">${prod.old || ""}</div>
             <div class="preco">${prod.preco}</div>
             <a href="${prod.link}" target="_blank" class="botao">COMPRAR</a>
         </div>
@@ -272,7 +272,7 @@ function mostrarProdutos(lista) {
     });
 }
 
-/* BUSCA */
+/* FILTRO CATEGORIA (ÚNICO E CORRETO) */
 document.getElementById("categoria").addEventListener("change", e => {
 
     const categoria = e.target.value.toLowerCase();
@@ -288,19 +288,6 @@ document.getElementById("categoria").addEventListener("change", e => {
 
     mostrarProdutos(filtrados);
 
-});
-
-/* CATEGORIA */
-document.getElementById("categoria").addEventListener("change", e => {
-    let c = e.target.value;
-
-    if (c === "all") {
-        mostrarProdutos(produtosGlobal);
-        return;
-    }
-
-    let f = produtosGlobal.filter(p => p.categoria === c);
-    mostrarProdutos(f);
 });
 
 </script>
