@@ -145,8 +145,7 @@ function gerarProduto() {
 }
 
 function copiarJSON() {
-    produtoAtual = {
-    _local: true,
+    if (!produtoAtual) {
         alert("Gere o produto primeiro.");
         return;
     }
