@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Super Ofertas</title>
+<title>Achadinhos Super Ofertas</title>
 
 <style>
 body {
@@ -14,7 +14,7 @@ body {
 /* TOPO */
 .topo {
     background: #ff5722;
-    padding: 10px 15px;
+    padding: 10px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -25,18 +25,16 @@ body {
     border-radius: 8px;
 }
 
-#search {
+#search, #categoria {
     padding: 10px;
     border-radius: 6px;
     border: none;
-    width: 220px;
-    font-size: 14px;
 }
 
-/* TITULO */
-h2 {
-    padding: 15px;
-    font-size: 18px;
+/* TEXTO */
+.titulo-animado {
+    color: white;
+    font-weight: bold;
 }
 
 /* GRID */
@@ -52,34 +50,7 @@ h2 {
     background: white;
     border-radius: 10px;
     padding: 8px;
-    position: relative;
     transition: 0.2s;
-    cursor: pointer;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-
-/* IMAGEM */
-/* GRID */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 12px;
-    padding: 10px;
-}
-
-/* CARD */
-.card {
-    background: white;
-    border-radius: 10px;
-    padding: 8px;
-    position: relative;
-    transition: 0.2s;
-    cursor: pointer;
-    overflow: hidden;
 }
 
 .card:hover {
@@ -87,55 +58,15 @@ h2 {
     box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
 
-/* CONTAINER DA IMAGEM */
-.img-box {
-    width: 100%;
-    aspect-ratio: 1/1;   /* quadrado perfeito */
-    overflow: hidden;
-    border-radius: 8px;
-    background: #fff;
-}
-
-/* IMAGEM */
 .img-box img {
     width: 100%;
-    height: 100%;
-    object-fit: contain;  /* estilo Shopee */
-    transition: 0.3s;
-}
-
-/* ZOOM IGUAL SHOPEE */
-.card:hover img {
-    transform: scale(1.08);
-}
-
-/* BADGE */
-.badge {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: #ff5722;
-    color: white;
-    padding: 4px 6px;
-    border-radius: 5px;
-    font-size: 11px;
-    font-weight: bold;
-}
-
-/* TEXTO */
-.tempo {
-    font-size: 11px;
-    color: gray;
-    margin: 5px 0;
+    object-fit: contain;
 }
 
 .nome {
     font-size: 13px;
-    height: 34px;
-    overflow: hidden;
 }
 
-/* PREÇO */
 .old {
     text-decoration: line-through;
     color: gray;
@@ -145,10 +76,8 @@ h2 {
 .preco {
     color: #ff5722;
     font-weight: bold;
-    font-size: 16px;
 }
 
-/* BOTÃO */
 .botao {
     display: block;
     background: #ff5722;
@@ -158,69 +87,6 @@ h2 {
     border-radius: 6px;
     text-decoration: none;
     margin-top: 6px;
-    font-size: 13px;
-    transition: 0.2s;
-}
-
-.botao:hover {
-    background: #e64a19;
-}
-
-/* DESCONTO */
-.badge {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: #ff5722;
-    color: white;
-    padding: 4px 6px;
-    border-radius: 5px;
-    font-size: 11px;
-    font-weight: bold;
-}
-
-/* TEXTO */
-.tempo {
-    font-size: 11px;
-    color: gray;
-    margin: 5px 0;
-}
-
-.nome {
-    font-size: 13px;
-    height: 32px;
-    overflow: hidden;
-}
-
-/* PREÇO */
-.old {
-    text-decoration: line-through;
-    color: gray;
-    font-size: 12px;
-}
-
-.preco {
-    color: #ff5722;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-/* BOTÃO */
-.botao {
-    display: block;
-    background: #ff5722;
-    color: white;
-    text-align: center;
-    padding: 8px;
-    border-radius: 6px;
-    text-decoration: none;
-    margin-top: 6px;
-    font-size: 13px;
-    transition: 0.2s;
-}
-
-.botao:hover {
-    background: #e64a19;
 }
 </style>
 </head>
@@ -229,86 +95,95 @@ h2 {
 
 <div class="topo">
     <img src="banner.png" class="logo">
-    <input type="text" id="search" placeholder="🔎 Buscar produtos...">
+    <div class="titulo-animado">🔥 Achadinhos Super Ofertas</div>
+    <input type="text" id="search" placeholder="Buscar...">
+    <select id="categoria">
+        <option value="all">Categorias</option>
+    </select>
 </div>
 
-<h2>🔥 Promoções do dia</h2>
-
+<h2 style="padding:10px;">🔥 Promoções do dia</h2>
 <div id="produtos" class="grid"></div>
 
 <script>
 
 let produtosGlobal = [];
 
-// =========================
-// CARREGAR PRODUTOS
-// =========================
+function gerarCategorias(lista) {
+    const select = document.getElementById("categoria");
+
+    select.innerHTML = `<option value="all">Categorias</option>`;
+
+    const categorias = [...new Set(
+        lista.map(p => p.categoria?.toLowerCase()).filter(Boolean)
+    )];
+
+    categorias.forEach(cat => {
+        const option = document.createElement("option");
+        option.value = cat;
+        option.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+        select.appendChild(option);
+    });
+}
 
 fetch('./produtos.json')
-  .then(res => res.json())
-  .then(data => {
+.then(res => res.json())
+.then(data => {
 
-      let produtosLocal = JSON.parse(localStorage.getItem("produtos")) || [];
+    produtosGlobal = data;
 
-      const todosProdutos = [...produtosLocal, ...data];
+    gerarCategorias(data);
+    mostrarProdutos(data);
 
-      produtosGlobal = todosProdutos;
-      mostrarProdutos(todosProdutos);
-
-  });
-
-
-// =========================
-// MOSTRAR PRODUTOS
-// =========================
+});
 
 function mostrarProdutos(lista) {
-
     const container = document.getElementById("produtos");
     container.innerHTML = "";
 
     lista.forEach(prod => {
-
         container.innerHTML += `
         <div class="card">
-
-            <div class="badge">${prod.desconto}</div>
-
             <div class="img-box">
-    <img src="${prod.imagem}" loading="lazy"/>
-</div>
-
-            <div class="tempo">${prod.tempo}</div>
-
+                <img src="${prod.imagem}">
+            </div>
             <div class="nome">${prod.nome}</div>
-
-            <div class="old">${prod.old}</div>
+            <div class="old">${prod.velho || ""}</div>
             <div class="preco">${prod.preco}</div>
-
             <a href="${prod.link}" target="_blank" class="botao">
-                COMPRAR
+                🔥 PEGAR OFERTA
             </a>
-
-        </div>
-        `;
+        </div>`;
     });
 }
 
+/* FILTRO */
+document.getElementById("categoria").addEventListener("change", e => {
 
-// =========================
-// BUSCA
-// =========================
+    const categoria = e.target.value.toLowerCase();
 
-document.getElementById("search").addEventListener("input", e => {
-
-    const valor = e.target.value.toLowerCase();
+    if (categoria === "all") {
+        mostrarProdutos(produtosGlobal);
+        return;
+    }
 
     const filtrados = produtosGlobal.filter(prod =>
-        prod.nome.toLowerCase().includes(valor)
+        prod.categoria && prod.categoria.toLowerCase().includes(categoria)
     );
 
     mostrarProdutos(filtrados);
+});
 
+/* BUSCA */
+document.getElementById("search").addEventListener("input", e => {
+
+    const texto = e.target.value.toLowerCase();
+
+    const filtrados = produtosGlobal.filter(prod =>
+        prod.nome.toLowerCase().includes(texto)
+    );
+
+    mostrarProdutos(filtrados);
 });
 
 </script>
