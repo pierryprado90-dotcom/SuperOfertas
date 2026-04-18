@@ -147,7 +147,6 @@ fetch('./produtos.json')
 
     gerarCategorias(todosProdutos);
     mostrarProdutos(todosProdutos);
-    mostrarDestaque(todosProdutos);
 
 });
 
@@ -179,6 +178,34 @@ document.getElementById("categoria").addEventListener("change", e => {
     if (categoria === "all") {
         mostrarProdutos(produtosGlobal);
         return;
+function mostrarDestaque(lista) {
+    const destaques = lista.filter(p => p.destaque);
+
+    if (destaques.length === 0) return;
+
+    const container = document.createElement("div");
+
+    container.innerHTML = `
+        <h2 style="padding:10px;">🔥 Destaque do dia</h2>
+        <div class="grid">
+            ${destaques.map(prod => `
+                <div class="card" style="border:2px solid #ff5722;">
+                    <div class="img-box">
+                        <img src="${prod.imagem}">
+                    </div>
+                    <div class="nome">${prod.nome}</div>
+                    <div class="old">${prod.velho || ""}</div>
+                    <div class="preco">${prod.preco}</div>
+                    <a href="${prod.link}" target="_blank" class="botao">
+                        🔥 COMPRAR AGORA
+                    </a>
+                </div>
+            `).join("")}
+        </div>
+    `;
+
+    document.body.insertBefore(container, document.getElementById("produtos"));
+}        
     }
 
     const filtrados = produtosGlobal.filter(prod =>
