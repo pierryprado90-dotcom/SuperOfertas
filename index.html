@@ -58,8 +58,17 @@ body {
     box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
 
-.img-box img {
+.img-box {
     width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-box img {
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
 }
 
