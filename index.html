@@ -135,14 +135,19 @@ function gerarCategorias(lista) {
     });
 }
 
+let produtosLocal = JSON.parse(localStorage.getItem("produtos")) || [];
+
 fetch('./produtos.json')
 .then(res => res.json())
 .then(data => {
 
-    produtosGlobal = data;
+    const todosProdutos = [...data, ...produtosLocal];
 
-    gerarCategorias(data);
-    mostrarProdutos(data);
+    produtosGlobal = todosProdutos;
+
+    gerarCategorias(todosProdutos);
+    mostrarProdutos(todosProdutos);
+    mostrarDestaque(todosProdutos);
 
 });
 
