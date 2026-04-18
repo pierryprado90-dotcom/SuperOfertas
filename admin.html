@@ -111,19 +111,39 @@ button:hover {
 <script>
 let produtoAtual = null;
 
-function gerarProduto() {
-    const nome = document.getElementById("nome").value.trim();
-    const preco = document.getElementById("preco").value.trim();
-    const old = document.getElementById("old").value.trim();
-    const imagem = document.getElementById("imagem").value.trim();
-    const link = document.getElementById("link").value.trim();
-    const descontoBruto = document.getElementById("desconto").value.trim();
-    const categoria = document.getElementById("categoria").value.trim();
+function adicionarProduto() {
+
+    const nome = document.getElementById("nome").value;
+    const preco = document.getElementById("preco").value;
+    const velho = document.getElementById("velho").value;
+    const imagem = document.getElementById("imagem").value;
+    const link = document.getElementById("link").value;
+    const categoria = document.getElementById("categoria").value;
 
     if (!nome || !preco || !imagem || !link) {
-        alert("Preencha pelo menos nome, preço, imagem e link.");
+        alert("Preencha os campos obrigatórios!");
         return;
     }
+
+    const novoProduto = {
+        nome,
+        preco,
+        velho,
+        imagem,
+        link,
+        categoria
+    };
+
+    let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+
+    produtos.push(novoProduto);
+
+    localStorage.setItem("produtos", JSON.stringify(produtos));
+
+    alert("Produto adicionado com sucesso!");
+
+    location.reload();
+}
 
     let desconto = descontoBruto;
     if (desconto && !desconto.startsWith("-")) desconto = "-" + desconto;
